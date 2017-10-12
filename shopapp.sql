@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_login` varchar(60) NOT NULL DEFAULT '' COMMENT '用户名',
-  `user_pass` varchar(255) NOT NULL DEFAULT '' COMMENT '登录密码；sp_password加密',
+  `password` varchar(255) NOT NULL DEFAULT '' COMMENT '登录密码；',
   `user_nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '用户美名',
   `user_email` varchar(100) NOT NULL DEFAULT '' COMMENT '登录邮箱',
   `user_url` varchar(100) NOT NULL DEFAULT '' COMMENT '用户个人网站',
