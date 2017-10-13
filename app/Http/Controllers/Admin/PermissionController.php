@@ -48,7 +48,6 @@ class PermissionController extends Controller
             'description'=>$request->description,
             'cid'=>$request->cid,
             'status' =>1,
-            'sss'=>1,
         ]);
         return $permission;
     }

@@ -16,15 +16,17 @@ Route::group(['prefix' => '/admin'], function () {
     Route::post('/login', 'Admin\PublicController@loginAct');
     Route::get('/verify', 'Admin\PublicController@verify');
 
-    Route::group(['middleware'=>'loginAuth:admin'],function (){
-        Route::get('/', ['uses'=>'Admin\IndexController@index','as'=>'index']);
-        Route::get('/index', ['uses'=>'Admin\IndexController@index','as'=>'index']);
+    Route::group(['middleware' => 'loginAuth:admin'], function () {
+        Route::get('/', ['uses' => 'Admin\IndexController@index', 'as' => 'index']);
+        Route::get('/index', ['uses' => 'Admin\IndexController@index', 'as' => 'index']);
         Route::resource('/user', 'Admin\UserController');
-        Route::resource('/role','Admin\RoleController');
-        Route::resource('/permission','Admin\PermissionController');
-        Route::resource('/category','Admin\CategoryController');
-        Route::resource('/good','Admin\GoodController');
-        Route::resource('/member','Admin\MemberController');
+        Route::resource('/role', 'Admin\RoleController');
+        Route::resource('/permission', 'Admin\PermissionController');
+        Route::resource('/category', 'Admin\CategoryController');
+        Route::resource('/good', 'Admin\GoodController');
+        Route::resource('/member', 'Admin\MemberController');
+
+        Route::post('uploadfile','Admin\SystemController@upload');
     });
 
 });

@@ -59,6 +59,7 @@ class LoginAuth
             }
             $url = implode('.',$url);
 
+
             if(!$user->can($url)){
                 return redirect('/admin/index');
             }

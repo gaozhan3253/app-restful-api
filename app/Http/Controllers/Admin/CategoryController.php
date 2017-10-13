@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use League\Flysystem\Exception;
 
 class CategoryController extends Controller
 {
@@ -14,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categorys = Category::get();
+        $categorys = cidSort($categorys);
+        return view('admin.category.index',compact('categorys'));
     }
 
     /**
@@ -24,7 +28,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categorys = Category::get();
+        $categorys = cidSort($categorys);
+        return view('admin.category.create',compact('categorys'));
     }
 
     /**
@@ -35,7 +41,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create([
+            'cid'=>$request->cid,
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'sort'=>$request->sort,
+            'status' =>1,
+        ]);
     }
 
     /**
@@ -57,7 +69,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categorys = Category::get();
+        $categorys = cidSort($categorys);
+        $result = Category::find($id);
+        return view('admin.category.edit',compact('categorys','result'));
     }
 
     /**
@@ -69,7 +84,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $category = Category::find($id);
+       $category->cid = $request->cid;
+        $category->name = $request->name;
+        $category->description = trim($request->description);
+        $category->sort = $request->sort;
+        $category->save();
     }
 
     /**
@@ -80,6 +100,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bool = Category::where('cid','=',$id)->first();
+        if(!$bool){
+            $category = Category::find((int)$id);
+            $category->delete();
+        }
     }
 }

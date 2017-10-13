@@ -14,6 +14,5 @@ class BaseController extends Controller
     {
         $message = $validator->errors()->first();
         return $this->response()->error($message,500);
-//        return  ['message'=>$message,'status_code' => 500];
     }
 }

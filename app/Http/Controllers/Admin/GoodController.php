@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\models\Category;
+use App\models\Good;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,8 @@ class GoodController extends Controller
      */
     public function index()
     {
-        //
+        $goods = Good::paginate(10);
+        return view('admin.good.index',compact('goods'));
     }
 
     /**
@@ -24,7 +27,9 @@ class GoodController extends Controller
      */
     public function create()
     {
-        //
+        $categorys = Category::where('status','=','1')->get();
+        $categorys = cidSort($categorys);
+        return view('admin.good.create',compact('categorys'));
     }
 
     /**
