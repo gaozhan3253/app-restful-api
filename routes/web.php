@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function (){
+    return \App\Models\Member::select(['id','user_login'])->get();
+});
 
 Route::group(['prefix' => '/admin'], function () {
     Route::get('/login', 'Admin\PublicController@login');
@@ -26,6 +29,7 @@ Route::group(['prefix' => '/admin'], function () {
         Route::resource('/good', 'Admin\GoodController');
         Route::resource('/member', 'Admin\MemberController');
 
+        Route::get('upload','Admin\SystemController@index');
         Route::post('uploadfile','Admin\SystemController@upload');
     });
 

@@ -17,10 +17,10 @@ use Illuminate\Http\Request;
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
+    
     //数据解密中间件
     $api->group(['middleware'=>'api.decrypt'],function ($api){
         $api->post('test', 'App\Api\V1\Controllers\IndexController@test');
-
 
         //jwt权限中间件
         $api->group(['middleware'=>'api.jwt.auth'],function ($api){
@@ -32,5 +32,13 @@ $api->version('v1', function ($api) {
         $api->post('register', 'App\Api\V1\Controllers\PublicController@register');
         $api->get('updatetoken', 'App\Api\V1\Controllers\PublicController@updateToken');
     });
+
+
+    $api->get('/category', 'App\Api\V1\Controllers\CategoryController@index');
+    $api->get('/good', 'App\Api\V1\Controllers\GoodController@index');
+    $api->get('/category/{id}', 'App\Api\V1\Controllers\CategoryController@show');
+    $api->get('/good/{id}', 'App\Api\V1\Controllers\GoodController@show');
+    $api->post('/uploadfile', 'App\Api\V1\Controllers\SystemController@upload');
+
 });
 

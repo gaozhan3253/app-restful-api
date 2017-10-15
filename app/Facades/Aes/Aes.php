@@ -8,7 +8,6 @@
 
 namespace App\Facades\Aes;
 
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class Aes
 {
@@ -31,6 +30,9 @@ class Aes
      * @return String
      */
     private function stripPkcs7Padding($string){
+        if(empty($string)){
+            return false;
+        }
         $slast = ord(substr($string, -1));
         $slastc = chr($slast);
 
@@ -70,7 +72,6 @@ class Aes
             $iv = $key;
         }
         $iv = $this->ivSbustr($iv);
-
         return  $this->stripPkcs7Padding(openssl_decrypt($data, 'AES-128-CBC',$key,0, $iv));
     }
 

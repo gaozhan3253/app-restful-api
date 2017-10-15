@@ -4,10 +4,11 @@ namespace App\Api\V1\Controllers;
 
 use App\Api\BaseController;
 use App\Api\V1\Transformers\UserTransformer;
+use App\Jobs\SendEmail;
 use App\Models\Member;
-
 use JWTAuth;
 use Dingo\Api\Http\Request;
+use App\Api\V1\Requests\IndexPost;
 
 
 class IndexController extends BaseController
@@ -17,11 +18,15 @@ class IndexController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexPost $request)
     {
         $token = JWTAuth::getToken(); //获取传入的token
         $user = JWTAuth::parseToken()->authenticate();
-        dump($user->user_login);
+//        dump($user->user_login);
+//        dump($request->all());
+//        dump($request->session());
+
+//            $this->dispatch( (new SendEmail($user))); //队列
 //        return $this->response->item($user,new UserTransformer)->statusCode(200);
 
 //        return $this->response->array(['s']);
@@ -54,7 +59,7 @@ class IndexController extends BaseController
 
     public function test(Request $request)
     {
-        dump($request->bodys);
+        dump($request->all());
 
 //                return $this->response->array(['message'=>'test']);
     }
