@@ -9,10 +9,4 @@ use Illuminate\Contracts\Validation\Validator;
 class BaseController extends Controller
 {
     use Helpers;
-
-    protected function formatValidationErrors(Validator $validator)
-    {
-        $message = $validator->errors()->first();
-        return $this->response()->error($message,500);
-    }
 }
