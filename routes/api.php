@@ -36,8 +36,10 @@ $api->version('v1', function ($api) {
 
     $api->get('/category', 'App\Api\V1\Controllers\CategoryController@index');
     $api->get('/good', 'App\Api\V1\Controllers\GoodController@index');
+
     $api->get('/category/{id}', 'App\Api\V1\Controllers\CategoryController@show');
     $api->get('/good/{id}', 'App\Api\V1\Controllers\GoodController@show');
+
     $api->post('/uploadfile', 'App\Api\V1\Controllers\SystemController@upload');
 
 });
