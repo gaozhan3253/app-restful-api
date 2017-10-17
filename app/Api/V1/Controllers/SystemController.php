@@ -6,6 +6,7 @@ namespace App\Api\V1\Controllers;
 use App\Api\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 
 class SystemController extends BaseController
@@ -13,10 +14,18 @@ class SystemController extends BaseController
     //
     public function upload(Request $request)
     {
-//        Cache::store('redis')->put('name','高展');
+        $name = Redis::set('name','高展');
+        $name = Redis::get('name');
+        dump($name);
+        Cache::store('redis')->put('foo', '123',100);
 
-        $name = Cache::store('redis')->get('name');
-dump($name);
+        $value = Cache::store('redis')->get('foo');
+        dump($value);
+
+//        Cache::store('redis')->put('name','高展');
+//
+//        $name = Cache::store('redis')->get('name');
+//dump($name);
 //        dump($request->allFiles());
 //        if ($request->hasFile('filename')) {
 //            $path = request()->file('filename')->store('events');
