@@ -20,7 +20,6 @@ $api->version('v1', function ($api) {
     
     //数据解密中间件
     $api->group(['middleware'=>'api.decrypt'],function ($api){
-        $api->post('test', 'App\Api\V1\Controllers\IndexController@test');
 
         //jwt权限中间件
         $api->group(['middleware'=>'api.jwt.auth'],function ($api){
@@ -34,6 +33,7 @@ $api->version('v1', function ($api) {
     });
 
 
+    $api->get('/test', 'App\Api\V1\Controllers\SystemController@test');
 
 
     //登陆 短信登陆

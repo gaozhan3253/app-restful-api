@@ -13,22 +13,12 @@ use Illuminate\Support\Facades\Redis;
 class SystemController extends BaseController
 {
     //
-    public function upload(Request $request)
+    public function test(Request $request)
     {
+        Cache::flush();
         dump( date('Y-m-d H:i:s',time()));
-        for($i=8418;$i<19999;$i++){
-            Good::create([
-                'category_id'=>1,
-                'name'=>'产品名称'.$i,
-                'sn'=>$i,
-                'price'=>$i,
-                'stock'=>100,
-                'sales'=>rand(0,999),
-                'description'=>'产品描述'.$i,
-                'sort'=>$i,
-                'status'=>1
-            ]);
-        }
+        $category = Cache::store('redis')->get('caregorys_911627914');
+        dump('缓存结果集长度:'.count($category));
         dump( date('Y-m-d H:i:s',time()));
 
 //        $name = Redis::set('name','高展');

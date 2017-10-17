@@ -18,6 +18,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
+//        ini_set('max_execution_time','3600');
             //缓存有效时间 10分钟
             $expiresAt = Carbon::now()->addMinutes(10);
             //通过缓存获取栏目列表 缓存有效期10分钟
@@ -25,6 +26,7 @@ class CategoryController extends BaseController
                 //缓存过期不存在时 数据库查询
                 return Category::on('mysql')->where(['status' => 1])->get();
             });
+       
             //返回json
             return $this->response->collection($categorys, new CategoryTransformer())
                 ->setMeta(['message' => '获取成功', 'status' => 'success', 'status_code' => 200])
