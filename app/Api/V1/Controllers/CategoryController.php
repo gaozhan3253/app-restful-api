@@ -21,7 +21,7 @@ class CategoryController extends BaseController
             //缓存有效时间 10分钟
             $expiresAt = Carbon::now()->addMinutes(10);
             //通过缓存获取栏目列表 缓存有效期10分钟
-            $categorys = Cache::store('file')->remember('categorys', $expiresAt, function () {
+            $categorys = Cache::store('redis')->remember('categorys', $expiresAt, function () {
                 //缓存过期不存在时 数据库查询
                 return Category::on('mysql')->where(['status' => 1])->get();
             });
@@ -41,12 +41,16 @@ class CategoryController extends BaseController
     public function show($id)
     {
             $expiresAt = Carbon::now()->addMinutes(10);
-            $category = Cache::store('file')->remember('category_' . $id, $expiresAt, function () use($id){
-                return Category::where(['status' => 1])->find($id);
+            $category = Cache::store('redis')->remember('category_' . $id, $expiresAt, function () use($id){
+                $item =  Category::where(['status' => 1])->find($id);
+                if(empty($item)){
+                    throw new Exception('无此栏目', 404);
+                }
+                return $item;
             });
 
             if (empty($category)) {
-                throw new Exception('无此栏目', 403);
+                throw new Exception('无此栏目', 404);
             }
             return $this->response->item($category, new CategoryTransformer());
 
