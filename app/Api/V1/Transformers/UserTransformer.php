@@ -19,6 +19,7 @@ class UserTransformer extends TransformerAbstract
             'id' => $item->id,
             'user_login' => $item->user_login,
             'user_nickname' => isset($item->user_nickname)?$item->user_nickname:'',
+            'avatar' => isset($item->avatar)?$item->avatar:'',
             'mobile' => isset($item->mobile)?$item->mobile:'',
             'qq' => isset($item->qq)?$item->qq:'',
             'wechat' => isset($item->wechat)?$item->wechat:'',

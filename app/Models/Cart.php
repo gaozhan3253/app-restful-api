@@ -29,6 +29,11 @@ class Cart extends Model
         return $carts;
     }
 
+    /**
+     * 根据指定用户获取购物车汇总 总价和数量
+     * @param $user
+     * @return array
+     */
     public static function getTotalCarts($user)
     {
         $number = 0;
@@ -36,7 +41,7 @@ class Cart extends Model
         $carts = self::getAllCarts($user);
         foreach ($carts as $cart) {
             $cartNumber = $cart->number;
-            $cartPrice = $cart->price;
+            $cartPrice = $cart->good_price;
             $cartTotal = $cartNumber * $cartPrice;
             $number += $cartNumber;
             $price += $cartTotal;
@@ -50,7 +55,7 @@ class Cart extends Model
      * @param $good 商品obj
      * @param int $number 商品数量
      */
-    public function addCart($user, $good, $number = 1)
+    public static function addCart($user, $good, $number = 1)
     {
         $goodCart = self::checkGoodInCart($user->id, $good->id);
         if (!empty($goodCart)) {

@@ -36,8 +36,27 @@ class Member extends Authenticatable
     }
 
 
+    /**
+     * 一对多关联 关联购物车
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function carts()
     {
         return $this->hasMany('App\Models\Cart','user_id','id');
+    }
+
+    /**
+     * 更新用户资料
+     * @param $user
+     * @param $request
+     */
+    public static function updateArchives($user,$request)
+    {
+        $user->user_nickname = $request->input('nickname');
+        $user->avatar = $request->input('avatar','');
+        $user->qq = $request->input('qq','');
+        $user->wechat = $request->input('wechat','');
+        $user->sex = $request->input('sex','');
+        $user->save();
     }
 }

@@ -69,14 +69,14 @@ $api->version('v1', function ($api) {
 
 
 
-    //获取会员信息
+    //获取会员信息 ok
     $api->get('/member', 'App\Api\V1\Controllers\MemberController@index');
 
-    //修改会员信息
-    $api->put('/member', 'App\Api\V1\Controllers\MemberController@update');
+    //修改会员信息 ok
+    $api->put('/member', 'App\Api\V1\Controllers\MemberController@updateArchives');
 
-    //头像修改
-    $api->put('/memberLogo', 'App\Api\V1\Controllers\MemberController@updateLogo');
+    //头像上传
+    $api->post('/updateImage', 'App\Api\V1\Controllers\SystemController@updateImage');
 
     //密码修改
 

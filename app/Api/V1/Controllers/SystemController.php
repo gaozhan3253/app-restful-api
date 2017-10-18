@@ -4,14 +4,17 @@ namespace App\Api\V1\Controllers;
 
 
 use App\Api\BaseController;
-use App\models\Good;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SystemController extends BaseController
 {
+    public function updateImage(Request $request)
+    {
+        $path = Storage::putFile('/upload', $request->file('filename'));
+        return $path;
+    }
     //
     public function test(Request $request)
     {

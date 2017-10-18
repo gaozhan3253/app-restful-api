@@ -18,7 +18,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-//        \App\Api\V1\Middleware\Cors::class,  //解决跨域请求的midd...
+        \App\Api\V1\Middleware\Cors::class,  //解决跨域请求的midd...
     ];
 
     /**
