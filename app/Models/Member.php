@@ -34,4 +34,10 @@ class Member extends Authenticatable
     protected static function  findUserEmail($email) {
         return  Member::where('user_email', $email)->first();
     }
+
+
+    public function carts()
+    {
+        return $this->hasMany('App\Models\Cart','user_id','id');
+    }
 }

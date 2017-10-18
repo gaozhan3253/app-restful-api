@@ -185,9 +185,13 @@ return [
         //jwt
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
+        //rsa aes加解密
         App\Providers\RsaServiceProvider::class,
         App\Providers\AesServiceProvider::class,
 
+        //短信
+        Toplan\PhpSms\PhpSmsServiceProvider::class,
+        Toplan\Sms\SmsManagerServiceProvider::class,
     ],
 
     /*
@@ -237,14 +241,20 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        //entrust
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
 
-
+        //JWT
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
 
+        //aes rsa加解密
         'RsaOptions'=>App\Facades\Rsa\RsaFacade::class,
         'AesOptions'=>App\Facades\Aes\AesFacade::class,
+
+        //短信
+        'PhpSms' => Toplan\PhpSms\Facades\Sms::class,
+        'SmsManager' => Toplan\Sms\Facades\SmsManager::class,
     ],
 
 ];

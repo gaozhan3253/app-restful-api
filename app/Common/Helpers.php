@@ -16,7 +16,21 @@ function cidSort($arr,$cid = 0,$i=0){
         if($v['cid'] == $cid){
             $v['key']=$i;
             $data[] = $v;
-            cidSort($arr,$v['id'],$i);
+            cidSort($arr,$v['id'],$i++);
+        }
+    }
+    return $data;
+}
+
+function sonTree($arr,$cid = 0,$i=0)
+{
+
+    $data = [];
+    foreach($arr as $k=>$v){
+        if($v->cid == $cid){
+            $v->key=$i;
+            $data[] = $v;
+            $data = array_merge($data,sonTree($arr,$v['id'],$i++));
         }
     }
     return $data;

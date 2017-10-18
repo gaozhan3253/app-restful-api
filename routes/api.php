@@ -27,6 +27,7 @@ $api->version('v1', function ($api) {
             $api->post('index', 'App\Api\V1\Controllers\IndexController@index');
         });
 
+
         $api->post('login', 'App\Api\V1\Controllers\PublicController@login');
         $api->post('register', 'App\Api\V1\Controllers\PublicController@register');
         $api->get('updatetoken', 'App\Api\V1\Controllers\PublicController@updateToken');
@@ -39,32 +40,34 @@ $api->version('v1', function ($api) {
     //登陆 短信登陆
     //注册 短信注册
 
-    //推荐产品列表
-    $api->get('/RecommendGoods', 'App\Api\V1\Controllers\IndexController@RecommendGood');
+    //推荐产品列表 ok
+    $api->get('/recommendGoods', 'App\Api\V1\Controllers\GoodController@Recommend');
 
-    //分类列表 pid参数
+    //分类列表 cid参数 ok
     $api->get('/categorys', 'App\Api\V1\Controllers\CategoryController@index');
-    //分类详情 可有可无
-    $api->get('/category/{id}', 'App\Api\V1\Controllers\CategoryController@show');
+    //分类详情 ok
+    $api->get('/categorys/{id}', 'App\Api\V1\Controllers\CategoryController@show');
 
 
-    //有分类产品列表 category_id参数
+    //有分类产品列表 category_id参数 分页参数 ok
     $api->get('/goods', 'App\Api\V1\Controllers\GoodController@index');
 
-    //产品详情页
-    $api->get('/good/{id}', 'App\Api\V1\Controllers\GoodController@show');
+    //产品详情页 ok
+    $api->get('/goods/{id}', 'App\Api\V1\Controllers\GoodController@show');
 
     //获取购物车列表
     $api->get('/carts', 'App\Api\V1\Controllers\CartController@index');
 
-    //加入购物车 数量+1
+    //加入购物车 数量+n ok
     $api->post('/addCart', 'App\Api\V1\Controllers\CartController@addCart');
 
-    //移出购物车 数量-1
+    //移出购物车 数量-n ok
     $api->post('/delCart', 'App\Api\V1\Controllers\CartController@delCart');
 
-    //购物车详情
+    //购物车合计 ok
     $api->get('/totalCart', 'App\Api\V1\Controllers\CartController@totalCart');
+
+
 
     //获取会员信息
     $api->get('/member', 'App\Api\V1\Controllers\MemberController@index');

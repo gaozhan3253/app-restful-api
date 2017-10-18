@@ -10,10 +10,36 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-10-17 22:06:40
+Date: 2017-10-18 18:03:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for carts
+-- ----------------------------
+DROP TABLE IF EXISTS `carts`;
+CREATE TABLE `carts` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `good_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `good_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `good_sn` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `good_image_url` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `good_price` int(11) DEFAULT NULL,
+  `number` int(11) DEFAULT '1',
+  `good_description` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of carts
+-- ----------------------------
+INSERT INTO `carts` VALUES ('2', '1', '1', '12', 'Iphone X', '00001', null, '8999', '1', null, '2017-10-18 16:33:49', '2017-10-18 16:33:49');
+INSERT INTO `carts` VALUES ('3', '2', '1', '12', '产品名称9', '9', null, '9', '4', null, '2017-10-18 16:53:03', '2017-10-18 16:53:19');
 
 -- ----------------------------
 -- Table structure for categorys
@@ -30,13 +56,16 @@ CREATE TABLE `categorys` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of categorys
 -- ----------------------------
 INSERT INTO `categorys` VALUES ('1', '0', '数码', '数码产品栏目分类', null, '0', '1', null, null);
 INSERT INTO `categorys` VALUES ('2', '0', '食品', '食物类', null, '1', '1', null, null);
+INSERT INTO `categorys` VALUES ('3', '1', '手机', '手机栏目', null, '0', '1', null, null);
+INSERT INTO `categorys` VALUES ('4', '3', '苹果', '苹果手机', null, '0', '1', null, null);
+INSERT INTO `categorys` VALUES ('5', '3', '魅族', '魅族手机', null, '0', '1', null, null);
 
 -- ----------------------------
 -- Table structure for goods
@@ -67,7 +96,7 @@ CREATE TABLE `goods` (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', '1', null, null, 'Iphone X', '00001', null, '8999', '100', '1', 'iphone 十周年纪念版', '<h1>详情</h1>', '1', '1', '1', '1', null, null);
+INSERT INTO `goods` VALUES ('1', '1', null, null, 'Iphone X', '00001', null, '1', '100', '1', 'iphone 十周年纪念版', '<h1>详情</h1>', '1', '1', '1', '1', null, null);
 INSERT INTO `goods` VALUES ('2', '1', null, null, 'Iphone 8', '00002', '', '5688', '100', '1', 'iphone 8代', '<h1>详情</h1>', '1', '1', '1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `goods` VALUES ('3', '1', null, null, '产品名称0', '0', null, '0', '100', '821', '产品描述0', null, null, null, '0', '1', '2017-10-17 19:55:44', '2017-10-17 19:55:44');
 INSERT INTO `goods` VALUES ('4', '1', null, null, '产品名称1', '1', null, '1', '100', '900', '产品描述1', null, null, null, '1', '1', '2017-10-17 19:55:44', '2017-10-17 19:55:44');
@@ -12593,51 +12622,6 @@ INSERT INTO `migrations` VALUES ('1', '2017_10_13_071347_create_categories_table
 INSERT INTO `migrations` VALUES ('2', '2017_10_13_071709_create_goods_table', '1');
 
 -- ----------------------------
--- Table structure for permission_role
--- ----------------------------
-DROP TABLE IF EXISTS `permission_role`;
-CREATE TABLE `permission_role` (
-  `permission_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
--- Records of permission_role
--- ----------------------------
-INSERT INTO `permission_role` VALUES ('1', '17');
-INSERT INTO `permission_role` VALUES ('2', '17');
-INSERT INTO `permission_role` VALUES ('19', '17');
-INSERT INTO `permission_role` VALUES ('20', '17');
-INSERT INTO `permission_role` VALUES ('21', '17');
-INSERT INTO `permission_role` VALUES ('22', '17');
-INSERT INTO `permission_role` VALUES ('3', '17');
-INSERT INTO `permission_role` VALUES ('23', '17');
-INSERT INTO `permission_role` VALUES ('24', '17');
-INSERT INTO `permission_role` VALUES ('25', '17');
-INSERT INTO `permission_role` VALUES ('26', '17');
-INSERT INTO `permission_role` VALUES ('4', '17');
-INSERT INTO `permission_role` VALUES ('27', '17');
-INSERT INTO `permission_role` VALUES ('28', '17');
-INSERT INTO `permission_role` VALUES ('29', '17');
-INSERT INTO `permission_role` VALUES ('30', '17');
-INSERT INTO `permission_role` VALUES ('31', '17');
-INSERT INTO `permission_role` VALUES ('2', '18');
-INSERT INTO `permission_role` VALUES ('19', '18');
-INSERT INTO `permission_role` VALUES ('20', '18');
-INSERT INTO `permission_role` VALUES ('21', '18');
-INSERT INTO `permission_role` VALUES ('22', '18');
-INSERT INTO `permission_role` VALUES ('31', '18');
-INSERT INTO `permission_role` VALUES ('32', '17');
-INSERT INTO `permission_role` VALUES ('33', '17');
-INSERT INTO `permission_role` VALUES ('36', '17');
-INSERT INTO `permission_role` VALUES ('37', '17');
-INSERT INTO `permission_role` VALUES ('38', '17');
-INSERT INTO `permission_role` VALUES ('34', '17');
-INSERT INTO `permission_role` VALUES ('39', '17');
-INSERT INTO `permission_role` VALUES ('40', '17');
-INSERT INTO `permission_role` VALUES ('41', '17');
-
--- ----------------------------
 -- Table structure for permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
@@ -12685,18 +12669,49 @@ INSERT INTO `permissions` VALUES ('40', 'good.edit', '产品修改', null, '34',
 INSERT INTO `permissions` VALUES ('41', 'good.destroy', '产品删除', null, '34', null, '1', '2017-10-08 03:29:13', '2017-10-08 03:29:13');
 
 -- ----------------------------
--- Table structure for role_user
+-- Table structure for permission_role
 -- ----------------------------
-DROP TABLE IF EXISTS `role_user`;
-CREATE TABLE `role_user` (
-  `role_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+DROP TABLE IF EXISTS `permission_role`;
+CREATE TABLE `permission_role` (
+  `permission_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
--- Records of role_user
+-- Records of permission_role
 -- ----------------------------
-INSERT INTO `role_user` VALUES ('17', '1');
+INSERT INTO `permission_role` VALUES ('1', '17');
+INSERT INTO `permission_role` VALUES ('2', '17');
+INSERT INTO `permission_role` VALUES ('19', '17');
+INSERT INTO `permission_role` VALUES ('20', '17');
+INSERT INTO `permission_role` VALUES ('21', '17');
+INSERT INTO `permission_role` VALUES ('22', '17');
+INSERT INTO `permission_role` VALUES ('3', '17');
+INSERT INTO `permission_role` VALUES ('23', '17');
+INSERT INTO `permission_role` VALUES ('24', '17');
+INSERT INTO `permission_role` VALUES ('25', '17');
+INSERT INTO `permission_role` VALUES ('26', '17');
+INSERT INTO `permission_role` VALUES ('4', '17');
+INSERT INTO `permission_role` VALUES ('27', '17');
+INSERT INTO `permission_role` VALUES ('28', '17');
+INSERT INTO `permission_role` VALUES ('29', '17');
+INSERT INTO `permission_role` VALUES ('30', '17');
+INSERT INTO `permission_role` VALUES ('31', '17');
+INSERT INTO `permission_role` VALUES ('2', '18');
+INSERT INTO `permission_role` VALUES ('19', '18');
+INSERT INTO `permission_role` VALUES ('20', '18');
+INSERT INTO `permission_role` VALUES ('21', '18');
+INSERT INTO `permission_role` VALUES ('22', '18');
+INSERT INTO `permission_role` VALUES ('31', '18');
+INSERT INTO `permission_role` VALUES ('32', '17');
+INSERT INTO `permission_role` VALUES ('33', '17');
+INSERT INTO `permission_role` VALUES ('36', '17');
+INSERT INTO `permission_role` VALUES ('37', '17');
+INSERT INTO `permission_role` VALUES ('38', '17');
+INSERT INTO `permission_role` VALUES ('34', '17');
+INSERT INTO `permission_role` VALUES ('39', '17');
+INSERT INTO `permission_role` VALUES ('40', '17');
+INSERT INTO `permission_role` VALUES ('41', '17');
 
 -- ----------------------------
 -- Table structure for roles
@@ -12717,6 +12732,20 @@ CREATE TABLE `roles` (
 -- ----------------------------
 INSERT INTO `roles` VALUES ('17', '系统管理员', null, '1', '2017-10-08 02:59:41', '2017-10-08 02:59:41');
 INSERT INTO `roles` VALUES ('18', '角色管理员', null, '1', '2017-10-08 03:25:06', '2017-10-08 03:25:06');
+
+-- ----------------------------
+-- Table structure for role_user
+-- ----------------------------
+DROP TABLE IF EXISTS `role_user`;
+CREATE TABLE `role_user` (
+  `role_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of role_user
+-- ----------------------------
+INSERT INTO `role_user` VALUES ('17', '1');
 
 -- ----------------------------
 -- Table structure for users
