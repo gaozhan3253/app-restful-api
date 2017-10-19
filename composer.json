@@ -14,6 +14,7 @@
         "predis/predis": "^1.1",
         "toplan/laravel-sms": "~2.6",
         "tymon/jwt-auth": "0.5.*",
+        "zircote/swagger-php": "^2.0",
         "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {

@@ -11,14 +11,46 @@ use App\models\Good;
 use App\Models\Member;
 use Dingo\Api\Contract\Http\Request;
 use JWTAuth;
-use League\Flysystem\Exception;
 
+/**
+ *   @SWG\Tag(
+ *     name="Carts",
+ *     description="购物车操作",
+ *   ),
+ */
 class CartController extends BaseController
 {
+
     /**
-     * 获取购物车内容
-     * @return \Dingo\Api\Http\Response
-     * @throws Exception
+     * @SWG\Get(path="/api/carts",
+     *   tags={"Carts"},
+     *   summary="获取当前用户的购物车列表",
+     *   description="请求该接口需要先登录。",
+     *   operationId="address",
+     *   produces={"application/json"},
+    @SWG\Parameter(
+     *     in="header",
+     *     name="rsa-aes-key",
+     *     type="string",
+     *     description="Rsa加密后的随机AES加密字符串",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="header",
+     *     name="aes-header",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Header信息 包含版本、请求时间、Token等信息",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response="200",
+     *     description="用户购物车商品列表"
+     *   ),
+     *   @SWG\Response(
+     *     response="500",
+     *     description="Token校验失败"
+     *   ),
+     * )
      */
     public function index()
     {
@@ -28,7 +60,7 @@ class CartController extends BaseController
         $user = Member::find(12);
         //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
         if (empty($user)) {
-            throw new Exception('无效用户', 401);
+            return $this->response->error('无效用户',401);
         }
         //根据用户获取carts
         $carts = Cart::getAllCarts($user);
@@ -36,10 +68,37 @@ class CartController extends BaseController
         return $this->response->collection($carts, new CartTransformer);
     }
 
+
     /**
-     * 获取当前用户购物车统计信息
-     * @return mixed price商品总金额 number商品总数量
-     * @throws Exception
+     * @SWG\Get(path="/api/totalCart",
+     *   tags={"Carts"},
+     *   summary="获取当前用户购物车统计信息",
+     *   description="请求该接口需要先登录。",
+     *   operationId="address",
+     *   produces={"application/json"},
+    @SWG\Parameter(
+     *     in="header",
+     *     name="rsa-aes-key",
+     *     type="string",
+     *     description="Rsa加密后的随机AES加密字符串",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="header",
+     *     name="aes-header",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Header信息 包含版本、请求时间、Token等信息",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response="200",
+     *     description="用户购物车商品的统计信息 总金额 总数量"
+     *   ),
+     *   @SWG\Response(
+     *     response="500",
+     *     description="Token校验失败"
+     *   ),
+     * )
      */
     public function totalCart()
     {
@@ -51,7 +110,7 @@ class CartController extends BaseController
 
         //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
         if (empty($user)) {
-            throw new Exception('无效用户', 401);
+            return $this->response->error('无效用户',401);
         }
 
         //获取购物车统计信息
@@ -59,11 +118,65 @@ class CartController extends BaseController
 
         return $this->response->array($total);
     }
+
+
     /**
-     * 添加购物车
-     * @param Request $request good_id 商品id number 商品数量 默认1
-     * @return \Dingo\Api\Http\Response
-     * @throws Exception
+     * @SWG\Post(path="/api/addCart",
+     *   tags={"Carts"},
+     *   summary="添加商品到购物车",
+     *   description="请求该接口需要先登录。",
+     *   operationId="address",
+     *   produces={"application/json"},
+    @SWG\Parameter(
+     *     in="header",
+     *     name="rsa-aes-key",
+     *     type="string",
+     *     description="Rsa加密后的随机AES加密字符串",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="header",
+     *     name="aes-header",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Header信息 包含版本、请求时间、Token等信息",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="formData",
+     *     name="aes-body",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Body信息 包含如下内容：",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="formData",
+     *     name="good_id",
+     *     type="string",
+     *     default="无效参数",
+     *     description="商品ID (组合后加密到aes-body中 本字段不要单独传递)",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="formData",
+     *     name="number",
+     *     type="string",
+     *     default="无效参数",
+     *     description="商品数量 (组合后加密到aes-body中 本字段不要单独传递)",
+     *     required=false,
+     *   ),
+     *   @SWG\Response(
+     *     response="201",
+     *     description="添加成功"
+     *   ),
+     *   @SWG\Response(
+     *     response="404",
+     *     description="无效商品"
+     *   ),
+     *   @SWG\Response(
+     *     response="500",
+     *     description="Token校验失败"
+     *   ),
+     * )
      */
     public function addCart(CartPost $request)
     {
@@ -73,7 +186,7 @@ class CartController extends BaseController
         $user = Member::where(['status'=>1])->find(12);
         //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
         if (empty($user)) {
-            throw new Exception('无效用户', 401);
+            return $this->response->error('无效用户',401);
         }
 
         $good_id = $request->input('good_id');
@@ -82,19 +195,71 @@ class CartController extends BaseController
         //查询商品信息
         $good = Good::where(['status'=>1,'id'=>$good_id])->first();
         if (empty($good)) {
-            throw new Exception('无效商品', 404);
+            return $this->response->error('无效商品',404);
         }
 
         //添加购物车
         Cart::addCart($user,$good,$number);
-        return $this->response->accepted();
+        return $this->response->created();
     }
 
     /**
-     * 将商品从购物车中减少
-     * @param CartPost $request good_id 商品id  number 减少的数量 减少的数量超过购物车中数量 会删除
-     * @return \Dingo\Api\Http\Response|void
-     * @throws Exception
+     * @SWG\Post(path="/api/delCart",
+     *   tags={"Carts"},
+     *   summary="将商品从购物车中减少/删除",
+     *   description="请求该接口需要先登录。",
+     *   operationId="address",
+     *   produces={"application/json"},
+    @SWG\Parameter(
+     *     in="header",
+     *     name="rsa-aes-key",
+     *     type="string",
+     *     description="Rsa加密后的随机AES加密字符串",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="header",
+     *     name="aes-header",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Header信息 包含版本、请求时间、Token等信息",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="formData",
+     *     name="aes-body",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Body信息 包含如下内容：",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="formData",
+     *     name="good_id",
+     *     type="string",
+     *     default="无效参数",
+     *     description="商品ID (组合后加密到aes-body中 本字段不要单独传递)",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="formData",
+     *     name="number",
+     *     type="string",
+     *     default="无效参数",
+     *     description="商品数量 (组合后加密到aes-body中 本字段不要单独传递)",
+     *     required=false,
+     *   ),
+     *   @SWG\Response(
+     *     response="204",
+     *     description="减少/删除成功"
+     *   ),
+     *   @SWG\Response(
+     *     response="404",
+     *     description="无效商品"
+     *   ),
+     *   @SWG\Response(
+     *     response="500",
+     *     description="Token校验失败"
+     *   ),
+     * )
      */
     public function delCart(CartPost $request)
     {
@@ -103,7 +268,7 @@ class CartController extends BaseController
         $user = Member::where(['status'=>1])->find(12);
         //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
         if (empty($user)) {
-            throw new Exception('无效用户', 401);
+            return $this->response->error('无效用户',401);
         }
 
         $good_id = $request->input('good_id');
@@ -112,7 +277,7 @@ class CartController extends BaseController
         //查询商品信息
         $good = Good::where(['status'=>1,'id'=>$good_id])->first();
         if (empty($good)) {
-            throw new Exception('无效商品', 404);
+            return $this->response->error('无效商品',404);
         }
 
         //查询购物车信息
@@ -124,25 +289,7 @@ class CartController extends BaseController
         //删除购物车商品
         Cart::delCart($goodCart,$number);
 
-        return $this->response->accepted();
+        return $this->response->noContent();
     }
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

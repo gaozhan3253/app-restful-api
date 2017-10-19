@@ -101,23 +101,30 @@ class Decrypt
                 return response()->json(['message' => '请求已过期', 'status_code' => 401], 401);
             }
 
+            //将aes_key保存 用于将返回信息加密
+             define('AES_KEY', $aes_key);
             //将解密后的header写回header中
-            foreach ($headers as $key=>$value){
-                //jwt验证token格式化处理
-                if($key == 'token'){
-                    $key = 'authorization';
-                    $value = 'bearer '.$value;
+            if(count($headers)){
+                foreach ($headers as $key=>$value){
+                    //jwt验证token格式化处理
+                    if($key == 'token'){
+                        $key = 'authorization';
+                        $value = 'bearer '.$value;
+                    }
+                    $request->headers->set($key, $value);
                 }
-                $request->headers->set($key, $value);
             }
+
 
             //获取body
             $aes_body = $request->get('aes-body','');
             //解密aes加密字符串
             $bodys = AesOptions::aes128cbcDecrypt($aes_body,$aes_key);
             $bodys = json_decode($bodys);
-            foreach ($bodys as $key=>$value){
-                $request->offsetSet($key,$value);
+            if(count($bodys)){
+                foreach ($bodys as $key=>$value){
+                    $request->offsetSet($key,$value);
+                }
             }
 
         } catch (Exception $e) {

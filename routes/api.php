@@ -31,6 +31,7 @@ $api->version('v1', function ($api) {
         $api->post('login', 'App\Api\V1\Controllers\PublicController@login');
         $api->post('register', 'App\Api\V1\Controllers\PublicController@register');
         $api->get('updatetoken', 'App\Api\V1\Controllers\PublicController@updateToken');
+        $api->get('getservertime', 'App\Api\V1\Controllers\PublicController@getServerTime');
     });
 
 
@@ -39,9 +40,6 @@ $api->version('v1', function ($api) {
 
     //登陆 短信登陆
     //注册 短信注册
-
-    //推荐产品列表 ok
-    $api->get('/recommendGoods', 'App\Api\V1\Controllers\GoodController@Recommend');
 
     //分类列表 cid参数 ok
     $api->get('/categorys', 'App\Api\V1\Controllers\CategoryController@index');
@@ -52,20 +50,25 @@ $api->version('v1', function ($api) {
     //有分类产品列表 category_id参数 分页参数 ok
     $api->get('/goods', 'App\Api\V1\Controllers\GoodController@index');
 
+    //推荐产品列表 ok
+    $api->get('/recommendGoods', 'App\Api\V1\Controllers\GoodController@recommend');
+
     //产品详情页 ok
     $api->get('/goods/{id}', 'App\Api\V1\Controllers\GoodController@show');
 
+
+
     //获取购物车列表
     $api->get('/carts', 'App\Api\V1\Controllers\CartController@index');
+
+    //购物车合计 ok
+    $api->get('/totalCart', 'App\Api\V1\Controllers\CartController@totalCart');
 
     //加入购物车 数量+n ok
     $api->post('/addCart', 'App\Api\V1\Controllers\CartController@addCart');
 
     //移出购物车 数量-n ok
     $api->post('/delCart', 'App\Api\V1\Controllers\CartController@delCart');
-
-    //购物车合计 ok
-    $api->get('/totalCart', 'App\Api\V1\Controllers\CartController@totalCart');
 
 
 
@@ -80,9 +83,20 @@ $api->version('v1', function ($api) {
 
     //密码修改
 
-    //收货地址 增加 修改 删除
-    $api->get('/address', 'App\Api\V1\Controllers\MemberController@index');
+    //收货地址列表
+    $api->get('/address', 'App\Api\V1\Controllers\AddressController@index');
+    //收货地址详情
+    $api->get('/address/{id}', 'App\Api\V1\Controllers\AddressController@show');
+    //收货地址增加
+    $api->post('/address', 'App\Api\V1\Controllers\AddressController@store');
+    //收货地址修改
+    $api->put('/address/{id}', 'App\Api\V1\Controllers\AddressController@update');
+    //收货地址 删除
+    $api->delete('/address/{id}', 'App\Api\V1\Controllers\AddressController@destroy');
 
+
+    //swaggerAPI文档json数据
+    $api->get('/getapi', 'App\Api\V1\Controllers\SystemController@getApiDoc');
 
 
 });

@@ -85,6 +85,12 @@ return [
         // ],
     ],
 
+    /**
+     * entrust需要指定验证的model 使用entrust:dev-aster版本不需要添加
+     * 解决role删除报错问题
+     * 效果待定
+     */
+    'model'=>'App\Models\User',
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords

@@ -36,14 +36,7 @@ class Member extends Authenticatable
     }
 
 
-    /**
-     * 一对多关联 关联购物车
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function carts()
-    {
-        return $this->hasMany('App\Models\Cart','user_id','id');
-    }
+
 
     /**
      * 更新用户资料
@@ -58,5 +51,23 @@ class Member extends Authenticatable
         $user->wechat = $request->input('wechat','');
         $user->sex = $request->input('sex','');
         $user->save();
+    }
+
+    /**
+     * 一对多关联 关联购物车
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carts()
+    {
+        return $this->hasMany('App\Models\Cart','user_id','id');
+    }
+
+    /**
+     * 一对多关联 关联收货地址
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function address()
+    {
+        return $this->hasMany('App\Models\MemberAddress','user_id','id');
     }
 }
