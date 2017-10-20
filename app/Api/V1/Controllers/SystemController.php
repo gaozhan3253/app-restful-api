@@ -69,8 +69,8 @@ class SystemController extends BaseController
     public function sendEmail(SendEmailPost $request)
     {
         $email = $request->input('email');
-        //邮件队列
         $this->dispatch((new SendEmail($email))->onQueue('emails'));
+        return $this->response->accepted();
     }
 
     public function checkSmsVerify()
