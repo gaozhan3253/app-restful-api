@@ -4,8 +4,12 @@ namespace App\Api\V1\Controllers;
 
 
 use App\Api\BaseController;
+use App\Api\V1\Requests\SendEmailPost;
+use App\Api\V1\Requests\UploadImagePost;
+use App\Jobs\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use SmsManager;
 
 /**
  * @SWG\Tag(
@@ -49,14 +53,98 @@ class SystemController extends BaseController
      *     response="200",
      *     description="图片地址"
      *   ),
+     *   @SWG\Response(
+     *     response="422",
+     *     description="文件不正确"
+     *   ),
      * )
      */
-    public function updateImage(Request $request)
+    public function updateImage(UploadImagePost $request)
     {
         $path = Storage::putFile('/upload', $request->file('filename'));
         return $this->response->array(['path'=>$path]);
     }
 
+
+    public function sendEmail(SendEmailPost $request)
+    {
+        $email = $request->input('email');
+        //邮件队列
+        $this->dispatch((new SendEmail($email))->onQueue('emails'));
+    }
+
+    public function checkSmsVerify()
+    {
+
+    }
+
+    /**
+     * @SWG\Post(path="/api/smsVerify",
+     *   tags={"System"},
+     *   summary="短信验证码",
+     *   description="该接口不需要登录",
+     *   operationId="smsVerify",
+     *   produces={"application/json"},
+     * @SWG\Parameter(
+     *     in="header",
+     *     name="rsa-aes-key",
+     *     type="string",
+     *     description="Rsa加密后的随机AES加密字符串",
+     *     required=true,
+     *   ),
+     * @SWG\Parameter(
+     *     in="header",
+     *     name="aes-header",
+     *     type="string",
+     *     description="使用随机AES加密字符串加密后的Header信息 包含版本、请求时间、等信息",
+     *     required=true,
+     *   ),
+     *@SWG\Parameter(
+     *     in="formData",
+     *     name="mobile",
+     *     type="file",
+     *     description="接收短信的号码",
+     *     required=true,
+     *   ),
+     *   @SWG\Response(
+     *     response="202",
+     *     description="发送成功"
+     *   ),
+     *   @SWG\Response(
+     *     response="500",
+     *     description="短信配置失败"
+     *   ),
+     *   @SWG\Response(
+     *     response="422",
+     *     description="参数校验失败"
+     *   ),
+     *   @SWG\Response(
+     *     response="404",
+     *     description="发送失败"
+     *   ),
+     * )
+     */
+    public function smsVerify(Request $request)
+    {
+        //接收手机号码
+        $mobile = $request->input('mobile','');
+        $result = SmsManager::validateSendable();
+        if($result['success'] == false){
+            return $this->response->error($result['message'],500);
+        }
+
+        $result = SmsManager::validateFields();
+        if($result['success'] == false){
+            return $this->response->error($result['message'],422);
+        }
+
+        $result = SmsManager::requestVerifySms();
+        if($result['success'] == false){
+            return $this->response->error($result['message'],404);
+        }else{
+            return $this->response->accepted();
+        }
+    }
 
 
 

@@ -188,6 +188,7 @@ return [
         //rsa aes加解密
         App\Providers\RsaServiceProvider::class,
         App\Providers\AesServiceProvider::class,
+//        Gaozhan\Aes\Aes::class,
 
         //短信
         Toplan\PhpSms\PhpSmsServiceProvider::class,
@@ -251,6 +252,7 @@ return [
         //aes rsa加解密
         'RsaOptions'=>App\Facades\Rsa\RsaFacade::class,
         'AesOptions'=>App\Facades\Aes\AesFacade::class,
+//        'AesOptions'=>Gaozhan\Aes\AesFacade::class,
 
         //短信
         'PhpSms' => Toplan\PhpSms\Facades\Sms::class,

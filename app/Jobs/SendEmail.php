@@ -15,15 +15,15 @@ class SendEmail implements ShouldQueue
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $member;
+    protected $email;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Member $member)
+    public function __construct($email)
     {
-        $this->member = $member;
+        $this->email = $email;
     }
 
     /**
@@ -33,6 +33,6 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-       Log::info('test'.rand(0,99999));
+       Log::info($this->email.rand(0,99999));
     }
 }

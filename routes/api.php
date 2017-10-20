@@ -36,6 +36,9 @@ $api->version('v1', function ($api) {
 
 
     $api->get('/test', 'App\Api\V1\Controllers\SystemController@test');
+    $api->post('/smsVerify', 'App\Api\V1\Controllers\SystemController@smsVerify');
+    $api->post('/sendEmail', 'App\Api\V1\Controllers\SystemController@sendEmail');
+    $api->post('/checkSmsVerify', 'App\Api\V1\Controllers\SystemController@checkSmsVerify');
 
 
     //登陆 短信登陆

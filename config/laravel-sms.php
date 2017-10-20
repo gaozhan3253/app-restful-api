@@ -14,7 +14,7 @@ return [
     'route' => [
         'enable'     => true,
         'prefix'     => 'laravel-sms',
-        'middleware' => ['web'],
+        'middleware' => ['api'],
     ],
 
     /*
@@ -105,7 +105,7 @@ return [
     |
     */
     'templates' => [
-        'Alidayu'    => 'SMS_94085043',
+        'Alidayu'    => 'SMS_56585074',
     ],
 
     /*
@@ -130,10 +130,10 @@ return [
     |
     */
     'data' => [
-        'code' => function ($code) {
+        'vercode' => function ($code) {
             return $code;
         },
-        'minutes' => function ($code, $minutes) {
+        'sendtime' => function ($code, $minutes) {
             return $minutes;
         },
     ],
