@@ -1,6 +1,6 @@
 # app-restful-api-demo
 
-> Laravel5.4 entrust + auth + dingo api + JWT + swagger，app api加密传输demo
+> Laravel5.4 entrust + auth + dingo api + JWT + swagger + rsa aes加解密，app api加密传输demo
 
 
 
