@@ -52,13 +52,13 @@ class AddressController extends BaseController
      */
     public function index()
     {
-//      $user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::where(['status'=>1])->find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+      $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::where(['status'=>1])->find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         $address = $user->address;
 
         return $this->response->collection($address,new AddressTransformer());
@@ -98,13 +98,13 @@ class AddressController extends BaseController
      */
     public function show($id)
     {
-//      $user = JWTAuth::parseToken()->authenticate();
+      $user = JWTAuth::parseToken()->authenticate();
         //测试 直接查询获取用户
-        $user = Member::where(['status'=>1])->find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+//        $user = Member::where(['status'=>1])->find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         $address = $user->address->find($id);
         if (empty($address)) {
             return $this->response->error('无效地址',404);
@@ -224,13 +224,13 @@ class AddressController extends BaseController
      */
     public function store(memberAddressPost $request)
     {
-//      $user = JWTAuth::parseToken()->authenticate();
+      $user = JWTAuth::parseToken()->authenticate();
         //测试 直接查询获取用户
-        $user = Member::where(['status'=>1])->find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+//        $user = Member::where(['status'=>1])->find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
 
         if(MemberAddress::createAddress($request,$user)){
             return $this->response->created();
@@ -351,13 +351,13 @@ class AddressController extends BaseController
     public function update(Request $request, $id)
     {
 
-        //$user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+        $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         $address = $user->address->find($id);
         if(empty($address)){
             return $this->response->error('无效地址',404);
@@ -407,13 +407,13 @@ class AddressController extends BaseController
      */
     public function destroy($id)
     {
-        //$user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+        $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         $address = $user->address->find($id);
         if(empty($address)){
             return $this->response->error('无效地址',404);

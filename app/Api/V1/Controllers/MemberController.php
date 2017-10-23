@@ -47,13 +47,13 @@ class MemberController extends BaseController
      */
     public function index()
     {
-//        $user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+        $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         return $this->response->item($user,new UserTransformer());
     }
 
@@ -137,13 +137,13 @@ class MemberController extends BaseController
      */
     public function updateArchives(memberUpdateArchivesPost $request)
     {
-        //        $user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+        $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         Member::updateArchives($user,$request);
         return $this->response->created();
     }

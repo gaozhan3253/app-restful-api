@@ -55,13 +55,13 @@ class CartController extends BaseController
     public function index()
     {
         //获取当前用户
-//        $user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+        $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
         //根据用户获取carts
         $carts = Cart::getAllCarts($user);
         //返回
@@ -103,15 +103,15 @@ class CartController extends BaseController
     public function totalCart()
     {
         //获取当前用户
-//        $user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::parseToken()->authenticate();
 
-        //测试获取用户
-        $user = Member::where(['status'=>1])->find(12);
-
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+//        //测试获取用户
+//        $user = Member::where(['status'=>1])->find(12);
+//
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
 
         //获取购物车统计信息
         $total = Cart::getTotalCarts($user);
@@ -181,13 +181,13 @@ class CartController extends BaseController
     public function addCart(CartPost $request)
     {
 
-//        $user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::where(['status'=>1])->find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+        $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::where(['status'=>1])->find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
 
         $good_id = $request->input('good_id');
         $number = $request->input('number', 1);
@@ -263,13 +263,13 @@ class CartController extends BaseController
      */
     public function delCart(CartPost $request)
     {
-//      $user = JWTAuth::parseToken()->authenticate();
-        //测试 直接查询获取用户
-        $user = Member::where(['status'=>1])->find(12);
-        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
-        if (empty($user)) {
-            return $this->response->error('无效用户',401);
-        }
+      $user = JWTAuth::parseToken()->authenticate();
+//        //测试 直接查询获取用户
+//        $user = Member::where(['status'=>1])->find(12);
+//        //测试 正式的无需使用这个 jwt获取不到用户会直接返回错误了
+//        if (empty($user)) {
+//            return $this->response->error('无效用户',401);
+//        }
 
         $good_id = $request->input('good_id');
         $number = $request->input('number', 1);

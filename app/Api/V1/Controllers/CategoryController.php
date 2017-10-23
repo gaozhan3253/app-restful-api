@@ -57,18 +57,18 @@ class CategoryController extends BaseController
      */
     public function index(Request $request)
     {
-        //PID
+        //cID
         $cid =$request->input('cid','');
         //缓存有效时间 10分钟
         $expiresAt = Carbon::now()->addMinutes(30);
         // 通过缓存获取栏目列表 缓存有效期10分钟
         $categorys = Cache::store('redis')->remember('categorys'.$cid, $expiresAt, function () use( $cid ){
-        //缓存过期不存在时 数据库查询
-        $categorys = Category::getCategory($cid);  //获取栏目信息 传入cid的话 会取出当前cid下所有栏目
-        if(empty($categorys)){
-            return $this->response->error('无栏目信息',404);
-        }
-        $categorys = collect($categorys); //经过子孙树查找 会将collection对象列表的数据转成array 现在回转成对象
+            //缓存过期不存在时 数据库查询
+            $categorys = Category::getCategory($cid);  //获取栏目信息 传入cid的话 会取出当前cid下所有栏目
+            if(empty($categorys)){
+                return $this->response->error('无栏目信息',404);
+            }
+            $categorys = collect($categorys); //经过子孙树查找 会将collection对象列表的数据转成array 现在回转成对象
             return $categorys;
         });
 

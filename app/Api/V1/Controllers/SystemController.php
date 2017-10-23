@@ -73,10 +73,6 @@ class SystemController extends BaseController
         return $this->response->accepted();
     }
 
-    public function checkSmsVerify()
-    {
-
-    }
 
     /**
      * @SWG\Post(path="/api/smsVerify",
