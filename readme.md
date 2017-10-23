@@ -5,6 +5,7 @@ api使用dingo/jwt
 
 
 业务流程：
+
 前端：
 前端生成随机字符串做aes加密字符串，使用rsa公钥加密 生成rsa_aes字符串
 组装header信息如时间戳 版本号 设备ID 身份token等，使用aes加密字符串进行aes加密得到 aes_header字符串
