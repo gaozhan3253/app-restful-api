@@ -26,3 +26,5 @@ api文档使用swagger    
 
 ####存储：
 使用了redis，要先配置好环境 或者注释掉缓存模块的代码
+
+rsa证书自己弄个 在storage/carts目录下
